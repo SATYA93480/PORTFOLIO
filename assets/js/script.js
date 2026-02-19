@@ -100,6 +100,24 @@
     expSkills.forEach(skill => expSkillObserver.observe(skill));
   }
 
+  // ── Projects: staggered reveal ──
+  const projRows = document.querySelectorAll('.proj-row');
+  if (projRows.length) {
+    const projObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          projObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    projRows.forEach((row, i) => {
+      row.style.transitionDelay = `${i * 0.12}s`;
+      projObserver.observe(row);
+    });
+  }
+
   // ── Achievements carousel ──
   (() => {
     const track = document.getElementById('achTrack');
