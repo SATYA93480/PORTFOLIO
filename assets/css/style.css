@@ -778,7 +778,187 @@
       .proj-header { flex-direction: column; align-items: flex-start; }
     }
     #projects .proj-row:nth-child(3) .proj-visual-frame svg { display: none; }
-/* ── ACHIEVEMENTS ── */
+
+    /* -- IMPACT / ACTIVITIES -- */
+    #impact {
+      padding: 90px 0 80px;
+      background: #f5ece8;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .act-header {
+      max-width: 1160px;
+      margin: 0 auto 48px;
+      padding: 0 2rem;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .act-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 4.5vw, 3.2rem);
+      font-weight: 800;
+      color: var(--maroon);
+      line-height: 1.1;
+    }
+    .act-title em { font-style: italic; font-weight: 400; color: rgba(128,0,0,0.45); }
+
+    .act-intro {
+      font-size: 0.88rem;
+      color: #7a6040;
+      line-height: 1.85;
+      margin-top: 12px;
+      max-width: 420px;
+      font-style: italic;
+    }
+
+    .act-track-wrap {
+      position: relative;
+      overflow: hidden;
+      mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%);
+      -webkit-mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%);
+    }
+
+    .act-track {
+      display: flex;
+      gap: 20px;
+      padding: 16px 5% 28px;
+      overflow-x: auto;
+      scroll-behavior: smooth;
+      scrollbar-width: none;
+      cursor: grab;
+      user-select: none;
+      -webkit-overflow-scrolling: touch;
+    }
+    .act-track::-webkit-scrollbar { display: none; }
+    .act-track.grabbing { cursor: grabbing; scroll-behavior: auto; }
+
+    .act-card {
+      flex: 0 0 260px;
+      min-width: 260px;
+      position: relative;
+      overflow: hidden;
+      border: 1.5px solid rgba(128,0,0,0.12);
+      background: #fff;
+      transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s;
+      cursor: pointer;
+    }
+    .act-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 16px 48px rgba(128,0,0,0.12);
+      border-color: rgba(201,168,76,0.5);
+    }
+
+    .act-card-photo {
+      width: 100%;
+      height: 200px;
+      overflow: hidden;
+      position: relative;
+      background: var(--maroon);
+    }
+
+    .act-card-photo img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.5s ease;
+      opacity: 0.9;
+    }
+    .act-card:hover .act-card-photo img { transform: scale(1.07); }
+
+    .act-card-photo svg {
+      width: 100%; height: 100%;
+      display: block;
+      transition: transform 0.5s ease;
+    }
+    .act-card:hover .act-card-photo svg { transform: scale(1.06); }
+
+    .act-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(128,0,0,0.92) 0%, rgba(128,0,0,0.6) 50%, transparent 100%);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 18px 16px;
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      z-index: 3;
+    }
+    .act-card:hover .act-overlay { opacity: 1; }
+
+    .act-overlay-text {
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.9);
+      line-height: 1.65;
+      transform: translateY(8px);
+      transition: transform 0.4s ease;
+    }
+    .act-card:hover .act-overlay-text { transform: translateY(0); }
+
+    .act-overlay-tag {
+      font-size: 0.58rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      font-weight: 600;
+      color: var(--gold);
+      margin-bottom: 6px;
+      transform: translateY(8px);
+      transition: transform 0.4s ease 0.05s;
+    }
+    .act-card:hover .act-overlay-tag { transform: translateY(0); }
+
+    .act-card-body {
+      padding: 16px 18px 18px;
+      border-top: 2px solid transparent;
+      transition: border-color 0.35s;
+      background: #fff;
+    }
+    .act-card:hover .act-card-body { border-top-color: var(--gold); }
+
+    .act-card-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--maroon);
+      line-height: 1.3;
+    }
+
+    .act-card-sub {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      margin-top: 5px;
+      letter-spacing: 0.5px;
+    }
+
+    .act-controls {
+      display: flex;
+      justify-content: center;
+      gap: 14px;
+      margin-top: 32px;
+    }
+
+    .act-btn {
+      width: 46px; height: 46px;
+      border: 1.5px solid rgba(128,0,0,0.2);
+      background: transparent;
+      color: var(--maroon);
+      font-size: 1rem;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: all 0.3s;
+    }
+    .act-btn:hover { background: var(--maroon); color: var(--gold); border-color: var(--maroon); }
+
+    @media (max-width: 600px) {
+      .act-header { flex-direction: column; align-items: flex-start; }
+      .act-card { flex: 0 0 220px; min-width: 220px; }
+      .act-card-photo { height: 160px; }
+    }/* ── ACHIEVEMENTS ── */
     #achievements {
       --bg-dark: #3b0b0b;
       background: linear-gradient(120deg, #e0c67b, #ab6666);
@@ -1225,6 +1405,7 @@
       .stat-row { gap: 1.2rem; }
       .expertise-card .meter { height: 9px; }
     }
+
 
 
 

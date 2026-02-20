@@ -260,3 +260,57 @@
     prevBtn?.addEventListener('click', () => { track.style.transition = 'transform 0.55s cubic-bezier(.22,.61,.36,1)'; });
     nextBtn?.addEventListener('click', () => { track.style.transition = 'transform 0.55s cubic-bezier(.22,.61,.36,1)'; });
   })();
+
+  // Impact / Activities scroll
+  const actTrack = document.getElementById('actTrack');
+  if (actTrack) {
+    const actPrev = document.getElementById('actPrev');
+    const actNext = document.getElementById('actNext');
+    const ACT_SCROLL = 280;
+
+    actNext?.addEventListener('click', () => actTrack.scrollBy({ left: ACT_SCROLL, behavior: 'smooth' }));
+    actPrev?.addEventListener('click', () => actTrack.scrollBy({ left: -ACT_SCROLL, behavior: 'smooth' }));
+
+    let actIsDown = false;
+    let actStartX = 0;
+    let actScrollLeft = 0;
+
+    actTrack.addEventListener('mousedown', e => {
+      actIsDown = true;
+      actTrack.classList.add('grabbing');
+      actStartX = e.pageX - actTrack.offsetLeft;
+      actScrollLeft = actTrack.scrollLeft;
+    });
+
+    window.addEventListener('mouseup', () => {
+      actIsDown = false;
+      actTrack.classList.remove('grabbing');
+    });
+
+    actTrack.addEventListener('mousemove', e => {
+      if (!actIsDown) return;
+      e.preventDefault();
+      const x = e.pageX - actTrack.offsetLeft;
+      const walk = (x - actStartX) * 1.5;
+      actTrack.scrollLeft = actScrollLeft - walk;
+    });
+
+    actTrack.addEventListener('touchstart', e => {
+      actIsDown = true;
+      actTrack.classList.add('grabbing');
+      actStartX = e.touches[0].pageX - actTrack.offsetLeft;
+      actScrollLeft = actTrack.scrollLeft;
+    }, { passive: true });
+
+    window.addEventListener('touchend', () => {
+      actIsDown = false;
+      actTrack.classList.remove('grabbing');
+    }, { passive: true });
+
+    actTrack.addEventListener('touchmove', e => {
+      if (!actIsDown) return;
+      const x = e.touches[0].pageX - actTrack.offsetLeft;
+      const walk = (x - actStartX) * 1.5;
+      actTrack.scrollLeft = actScrollLeft - walk;
+    }, { passive: true });
+  }
