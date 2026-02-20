@@ -314,3 +314,100 @@
       actTrack.scrollLeft = actScrollLeft - walk;
     }, { passive: true });
   }
+
+  function initAutoSlider(trackId) {
+    const track = document.getElementById(trackId);
+    if (!track) return;
+
+    let isDown = false;
+    let startX = 0;
+    let scrollLeft = 0;
+    let paused = false;
+    let rafId = null;
+
+    function autoScroll() {
+      if (!paused && !isDown) {
+        track.scrollLeft += 0.6;
+        if (track.scrollLeft >= track.scrollWidth - track.clientWidth) {
+          track.scrollLeft = 0;
+        }
+      }
+      rafId = requestAnimationFrame(autoScroll);
+    }
+
+    rafId = requestAnimationFrame(autoScroll);
+
+    track.addEventListener('mouseenter', () => { paused = true; });
+    track.addEventListener('mouseleave', () => { paused = false; });
+
+    track.addEventListener('mousedown', e => {
+      isDown = true;
+      track.classList.add('grabbing');
+      startX = e.pageX - track.offsetLeft;
+      scrollLeft = track.scrollLeft;
+    });
+
+    window.addEventListener('mouseup', () => {
+      isDown = false;
+      track.classList.remove('grabbing');
+    });
+
+    track.addEventListener('mousemove', e => {
+      if (!isDown) return;
+      e.preventDefault();
+      const x = e.pageX - track.offsetLeft;
+      const walk = (x - startX) * 1.5;
+      track.scrollLeft = scrollLeft - walk;
+    });
+
+    track.addEventListener('touchstart', e => {
+      isDown = true;
+      track.classList.add('grabbing');
+      startX = e.touches[0].pageX - track.offsetLeft;
+      scrollLeft = track.scrollLeft;
+    }, { passive: true });
+
+    window.addEventListener('touchend', () => {
+      isDown = false;
+      track.classList.remove('grabbing');
+    }, { passive: true });
+
+    track.addEventListener('touchmove', e => {
+      if (!isDown) return;
+      const x = e.touches[0].pageX - track.offsetLeft;
+      const walk = (x - startX) * 1.5;
+      track.scrollLeft = scrollLeft - walk;
+    }, { passive: true });
+  }
+
+  // Impact slider (home page)
+  initAutoSlider('impactTrack');
+
+  // Awards fade rotator (home page)
+  (() => {
+    const wrap = document.getElementById('awardsFade');
+    if (!wrap) return;
+    const items = Array.from(wrap.querySelectorAll('.awards-fade-item'));
+    if (!items.length) return;
+
+    let index = 0;
+    let paused = false;
+    const INTERVAL = 5000;
+
+    function show(idx) {
+      items.forEach((item, i) => item.classList.toggle('is-active', i === idx));
+    }
+
+    function next() {
+      if (paused) return;
+      index = (index + 1) % items.length;
+      show(index);
+    }
+
+    const timer = setInterval(next, INTERVAL);
+
+    wrap.addEventListener('mouseenter', () => { paused = true; });
+    wrap.addEventListener('mouseleave', () => { paused = false; });
+
+    window.addEventListener('beforeunload', () => clearInterval(timer));
+  })();
