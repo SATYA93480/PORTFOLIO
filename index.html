@@ -14,7 +14,7 @@
 <!-- ── NAVBAR ── -->
 <nav class="navbar navbar-expand-lg">
   <div class="container">
-    <a class="navbar-brand" href="#home">Sonali Satpathy</a>
+    <a class="navbar-brand" href="#home">Sonali Satapathy</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -41,7 +41,7 @@
       <div class="col-lg-6 order-lg-1 order-2">
         <div class="fade-in">
           <p class="hero-label mb-2">✦ Welcome to my world</p>
-          <h1 class="hero-name">Hello, I'm<br/>Sonali Satpathy</h1>
+          <h1 class="hero-name">Hello, I'm<br/>Sonali Satapathy</h1>
           <p class="hero-tagline">Entrepreneur &nbsp;|&nbsp; Social Leader &nbsp;|&nbsp; Creative Visionary</p>
           <p class="hero-desc">Transforming ideas into digital realities. Founder of SonyDig Technology — where innovation meets purpose, and code meets creativity.</p>
           <a href="#about" class="btn-hero">View My Journey</a>
@@ -52,7 +52,7 @@
         <div class="fade-in visible portrait-wrapper">
           <div class="portrait-frame">
             <!-- Placeholder portrait using an elegant gradient -->
-            <img src="assets/images/about.jpeg" alt="Portrait of Sonali Panda"/>
+            <img src="assets/images/about.jpeg" alt="Portrait of Sonali Satapathy"/>
           </div>
           <div class="portrait-deco"></div>
         </div>
@@ -80,6 +80,9 @@
         <p>Born on 19th September 1994, I am an IT entrepreneur, dancer, writer, and changemaker from Odisha. My journey has been shaped by a passion for both technology and the arts — proving that left-brain logic and right-brain creativity are not opposites but partners.</p>
         <p>After completing my B.Tech in Computer Science (2017) and an MBA, I founded <strong>SonyDig Technology</strong> in 2019 — a digital innovation studio at the intersection of AI, branding, and purposeful design.</p>
         <p>Beyond the boardroom, I am a vocal advocate for Women Entrepreneurship and social leadership in Odisha's startup ecosystem.</p>
+        <div class="about-more-wrap">
+          <a href="about.html" class="btn-hero">Read Full Bio</a>
+        </div>
       </div>
     </div>
   </div>
@@ -486,26 +489,30 @@
     <div class="row g-5">
       <!-- Form -->
       <div class="col-lg-7 fade-in">
-        <form>
+        <form action="https://formspree.io/f/yourFormId" method="POST">
           <div class="row g-3">
             <div class="col-md-6">
               <label class="form-label">Full Name</label>
-              <input type="text" class="form-control" placeholder="Your name"/>
+              <input type="text" name="name" class="form-control" placeholder="Your name" required/>
             </div>
             <div class="col-md-6">
               <label class="form-label">Email Address</label>
-              <input type="email" class="form-control" placeholder="your@email.com"/>
+              <input type="email" name="email" class="form-control" placeholder="your@email.com" required/>
             </div>
             <div class="col-12">
               <label class="form-label">Subject</label>
-              <input type="text" class="form-control" placeholder="How can I help you?"/>
+              <input type="text" name="subject" class="form-control" placeholder="How can I help you?" required/>
             </div>
             <div class="col-12">
               <label class="form-label">Message</label>
-              <textarea class="form-control" rows="5" placeholder="Tell me about your project or inquiry..."></textarea>
+              <textarea name="message" class="form-control" rows="5" placeholder="Tell me about your project or inquiry..." required></textarea>
             </div>
+            <input type="hidden" name="_subject" value="New portfolio message" />
             <div class="col-12">
               <button type="submit" class="btn-submit">Send Message</button>
+            </div>
+            <div class="col-12">
+              <p class="form-note">Demo setup: replace <code>yourFormId</code> with your Formspree form ID.</p>
             </div>
           </div>
         </form>
@@ -515,25 +522,32 @@
         <h3 class="social-heading">Stay Connected</h3>
         <p class="social-desc">Follow my journey across platforms — from business insights on LinkedIn to behind-the-scenes creativity on Instagram.</p>
         <div class="social-icons">
-          <a href="#" class="social-link">
+          <a href="https://www.linkedin.com/in/sonali-satapathy-7756881b5" class="social-link">
             <div class="social-icon-wrap"><i class="fab fa-linkedin-in"></i></div>
             <div>
               <span class="social-name">LinkedIn</span>
               <span class="social-handle">Professional Network</span>
             </div>
           </a>
-          <a href="#" class="social-link">
+          <a href="https://www.instagram.com/sonalisatapathypayal/" class="social-link">
             <div class="social-icon-wrap"><i class="fab fa-instagram"></i></div>
             <div>
               <span class="social-name">Instagram</span>
               <span class="social-handle">@sonali.entrepreneur</span>
             </div>
           </a>
+          <a href="https://www.facebook.com/sonalipayalsatapathy" class="social-link">
+            <div class="social-icon-wrap"><i class="fab fa-facebook-f"></i></div>
+            <div>
+              <span class="social-name">Facebook</span>
+              <span class="social-handle">/sonalipayalsatapathy</span>
+            </div>
+          </a>
           <a href="#" class="social-link">
             <div class="social-icon-wrap"><i class="fab fa-x-twitter"></i></div>
             <div>
               <span class="social-name">Twitter / X</span>
-              <span class="social-handle">@SonaliSatpathy</span>
+              <span class="social-handle">@SonaliSatapathy</span>
             </div>
           </a>
         </div>
@@ -545,7 +559,7 @@
 <!-- ── FOOTER ── -->
 <footer>
   <div class="container">
-    <p>&copy; 2026 <span>Sonali Satpathy</span> · SonyDig Technology · All Rights Reserved · Crafted with <span>✦</span> in Odisha</p>
+    <p>&copy; 2026 <span>Sonali Satapathy</span> · SonyDig Technology · All Rights Reserved · Crafted with <span>✦</span> in Odisha</p>
   </div>
 </footer>
 
