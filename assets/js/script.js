@@ -383,6 +383,9 @@
   // Impact slider (home page)
   initAutoSlider('impactTrack');
 
+  // Blog slider (home page)
+  initAutoSlider('blogTrack');
+
   // Awards fade rotator (home page)
   (() => {
     const wrap = document.getElementById('awardsFade');
@@ -392,22 +395,72 @@
 
     let index = 0;
     let paused = false;
-    const INTERVAL = 5000;
+    const INTERVAL = 3500;
+    const TRANSITION = 1000;
+    let transitionTimeout = null;
+    let isAnimating = false;
 
     function show(idx) {
-      items.forEach((item, i) => item.classList.toggle('is-active', i === idx));
+      items.forEach((item, i) => {
+        item.classList.toggle('is-active', i === idx);
+        item.classList.remove('is-prep-left', 'is-prep-right', 'is-exit-left', 'is-exit-right');
+      });
+    }
+
+    function go(toIndex, direction) {
+      if (isAnimating || toIndex === index) return;
+      const current = items[index];
+      const nextItem = items[toIndex];
+      isAnimating = true;
+
+      current.classList.remove('is-prep-left', 'is-prep-right');
+      nextItem.classList.remove('is-exit-left', 'is-exit-right');
+
+      if (direction === 'prev') {
+        nextItem.classList.add('is-prep-left');
+        nextItem.classList.add('is-active');
+        requestAnimationFrame(() => {
+          nextItem.classList.remove('is-prep-left');
+          current.classList.add('is-exit-right');
+        });
+      } else {
+        nextItem.classList.add('is-prep-right');
+        nextItem.classList.add('is-active');
+        requestAnimationFrame(() => {
+          nextItem.classList.remove('is-prep-right');
+          current.classList.add('is-exit-left');
+        });
+      }
+
+      if (transitionTimeout) clearTimeout(transitionTimeout);
+      transitionTimeout = setTimeout(() => {
+        current.classList.remove('is-active', 'is-exit-left', 'is-exit-right');
+        nextItem.classList.remove('is-prep-left', 'is-prep-right');
+        index = toIndex;
+        isAnimating = false;
+      }, TRANSITION);
     }
 
     function next() {
       if (paused) return;
-      index = (index + 1) % items.length;
-      show(index);
+      go((index + 1) % items.length, 'next');
     }
 
+    function prev() {
+      if (paused) return;
+      go((index - 1 + items.length) % items.length, 'prev');
+    }
+
+    show(index);
     const timer = setInterval(next, INTERVAL);
 
-    wrap.addEventListener('mouseenter', () => { paused = true; });
-    wrap.addEventListener('mouseleave', () => { paused = false; });
+    const prevBtn = wrap.querySelector('.awards-nav-prev');
+    const nextBtn = wrap.querySelector('.awards-nav-next');
+    if (prevBtn) prevBtn.addEventListener('click', () => go((index - 1 + items.length) % items.length, 'prev'));
+    if (nextBtn) nextBtn.addEventListener('click', () => go((index + 1) % items.length, 'next'));
 
-    window.addEventListener('beforeunload', () => clearInterval(timer));
+    window.addEventListener('beforeunload', () => {
+      clearInterval(timer);
+      if (transitionTimeout) clearTimeout(transitionTimeout);
+    });
   })();
