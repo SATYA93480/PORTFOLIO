@@ -118,6 +118,29 @@
     });
   }
 
+  // ── About cards: auto cycle (clickable) ──
+  (() => {
+    const wrap = document.querySelector('.about-home-cards-cycle');
+    if (!wrap) return;
+    const cards = Array.from(wrap.querySelectorAll('.about-home-card'));
+    if (!cards.length) return;
+
+    let idx = 0;
+    const INTERVAL = 4000;
+
+    function show(i) {
+      cards.forEach((card, cIdx) => {
+        card.classList.toggle('is-active', cIdx === i);
+      });
+    }
+
+    show(idx);
+    setInterval(() => {
+      idx = (idx + 1) % cards.length;
+      show(idx);
+    }, INTERVAL);
+  })();
+
   // ── Achievements carousel ──
   (() => {
     const track = document.getElementById('achTrack');
