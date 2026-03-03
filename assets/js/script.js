@@ -487,3 +487,4 @@
       if (transitionTimeout) clearTimeout(transitionTimeout);
     });
   })();
+
