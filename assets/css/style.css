@@ -3060,3 +3060,10 @@
 @media (max-width: 600px) {
 }
 
+.form-status {
+  min-height: 1.25rem;
+  font-size: 0.95rem;
+  color: var(--maroon);
+  letter-spacing: 0.2px;
+}
+

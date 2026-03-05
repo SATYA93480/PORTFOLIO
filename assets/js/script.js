@@ -488,3 +488,48 @@
     });
   })();
 
+  // Contact form: Formspree AJAX submit + 2s success redirect
+  (() => {
+    const form = document.getElementById('contactForm');
+    if (!form) return;
+    const statusEl = document.getElementById('formStatus');
+    const submitBtn = form.querySelector('button[type="submit"]');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (submitBtn) submitBtn.disabled = true;
+      if (statusEl) statusEl.textContent = 'Sending...';
+
+      try {
+        const formData = new FormData(form);
+        const res = await fetch(form.action, {
+          method: 'POST',
+          body: formData,
+          headers: { 'Accept': 'application/json' }
+        });
+
+        if (res.ok) {
+          if (statusEl) statusEl.textContent = 'Message sent. Redirecting...';
+          form.reset();
+          const target = form.dataset.redirect || 'index.html';
+          setTimeout(() => {
+            window.location.href = target;
+          }, 2000);
+        } else {
+          let errMsg = 'Oops! There was a problem sending your message.';
+          try {
+            const data = await res.json();
+            if (data?.errors?.length) {
+              errMsg = data.errors.map(e => e.message).join(', ');
+            }
+          } catch {}
+          if (statusEl) statusEl.textContent = errMsg;
+          if (submitBtn) submitBtn.disabled = false;
+        }
+      } catch {
+        if (statusEl) statusEl.textContent = 'Network error. Please try again.';
+        if (submitBtn) submitBtn.disabled = false;
+      }
+    });
+  })();
+
